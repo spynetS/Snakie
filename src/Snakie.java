@@ -63,11 +63,9 @@ public class Snakie extends JPanel{
     private void GameOver()
     {
         System.out.println("Game over");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        score = 0;
+        Score.setText("Score: 0");
+        snakeDirection = 0;
         snake.clear();
         snake.add(new SnakePiece(10,3));
         snake.add(new SnakePiece(11,3));
@@ -76,11 +74,11 @@ public class Snakie extends JPanel{
 
     public int getWidth()
     {
-        return window.getWidth();
+        return window.getWidth()-18;
     }
     public int getHeight()
     {
-        return window.getHeight()-gamePanelHeight;
+        return window.getHeight()-((gamePanelHeight*2));
     }
     public int getHeightD()
     {
@@ -89,12 +87,12 @@ public class Snakie extends JPanel{
 
     private void DrawBoard(Graphics g)
     {
-        g.setColor(Color.GREEN);
+        g.setColor(Color.GRAY);
         //Draws all the scares of the board in different sizes dependent on the window size
         for(int i = 0;i<getHeight()/20;i++) {
             for(int ii = 0;ii<getWidth()/20;ii++) {
                 //Uses only getHeightD so the squares are squares and not rectangles
-                g.drawRect(ii*getHeightD(), i*getHeightD(), getHeightD(), getHeightD() );
+                g.drawRect(ii*getWidth()/20, i*getHeightD(), getWidth()/20, getHeightD() );
 
             }
         }
@@ -106,27 +104,27 @@ public class Snakie extends JPanel{
         {
             if(snakePiece.equals(snake.get(0)))
             {
-                g.setColor(Color.lightGray);
+                g.setColor(new Color(0, 140, 35));
             }
             else
             {
-                g.setColor(Color.gray);
+                g.setColor(new Color(0, 184, 46));
             }
-            g.fillRect(snakePiece.x*getHeightD(),snakePiece.y*getHeightD(),getHeightD(),getHeightD());
+            g.fillRect(snakePiece.x*getWidth()/20,snakePiece.y*getHeightD(),getWidth()/20,getHeightD());
         }
 
     }
     private void DrawFood(Graphics g)
     {
         g.setColor(Color.RED);
-        g.fillOval(foodpos[0]*getHeightD(),foodpos[1]*getHeightD(),getHeightD(),getHeightD());
+        g.fillOval(foodpos[0]*getWidth()/20,foodpos[1]*getHeightD(),getWidth()/20,getHeightD());
     }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        DrawBoard(g);
-        DrawSnake(g);
         DrawFood(g);
+        DrawSnake(g);
+        DrawBoard(g);
     }
 
     private void CheckDirection()
@@ -182,7 +180,7 @@ public class Snakie extends JPanel{
         }
         for(SnakePiece piece : snake)
         {
-           if(piece.x<0||piece.x>(getWidth()/recwidth)||piece.y<0||piece.y>recheight)
+           if(piece.x<0||piece.x*getWidth()/20>(getWidth())||piece.y<0||piece.y>recheight-1)
            {
                GameOver();
                break;
@@ -201,7 +199,7 @@ public class Snakie extends JPanel{
     {
         JFrame window = new JFrame();
         window.setTitle("S N A K I E");
-        window.setSize(800,600+gamePanelHeight);
+        window.setSize(800,600);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel gamePanel = new JPanel();
