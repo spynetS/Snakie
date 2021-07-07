@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Snakie:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Snakie_jar</output-path>
+    <root id="archive" name="Snakie.jar">
+      <element id="module-output" name="Snakie" />
+    </root>
+  </artifact>
+</component>
