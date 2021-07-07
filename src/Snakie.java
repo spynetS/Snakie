@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -74,7 +75,7 @@ public class Snakie extends JPanel{
 
     public int getWidth()
     {
-        return window.getWidth()-18;
+        return window.getWidth();
     }
     public int getHeight()
     {
@@ -87,12 +88,21 @@ public class Snakie extends JPanel{
 
     private void DrawBoard(Graphics g)
     {
-        g.setColor(Color.GRAY);
         //Draws all the scares of the board in different sizes dependent on the window size
+        int x=0;
         for(int i = 0;i<getHeight()/20;i++) {
             for(int ii = 0;ii<getWidth()/20;ii++) {
                 //Uses only getHeightD so the squares are squares and not rectangles
-                g.drawRect(ii*getWidth()/20, i*getHeightD(), getWidth()/20, getHeightD() );
+                if((ii+i)%2==0)
+                {
+                    x= 0;
+                    g.setColor(new Color(0, 69, 17));
+                }
+                else
+                {
+                    g.setColor(new Color(0, 94, 23));
+                }
+                g.fillRect(ii*getWidth()/20, i*getHeightD(), getWidth()/20, getHeightD() );
 
             }
         }
@@ -104,11 +114,11 @@ public class Snakie extends JPanel{
         {
             if(snakePiece.equals(snake.get(0)))
             {
-                g.setColor(new Color(0, 140, 35));
+                g.setColor(new Color(0, 201, 50));
             }
             else
             {
-                g.setColor(new Color(0, 184, 46));
+                g.setColor(new Color(0, 173, 43));
             }
             g.fillRect(snakePiece.x*getWidth()/20,snakePiece.y*getHeightD(),getWidth()/20,getHeightD());
         }
@@ -122,9 +132,9 @@ public class Snakie extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        DrawBoard(g);
         DrawFood(g);
         DrawSnake(g);
-        DrawBoard(g);
     }
 
     private void CheckDirection()
@@ -199,14 +209,16 @@ public class Snakie extends JPanel{
     {
         JFrame window = new JFrame();
         window.setTitle("S N A K I E");
-        window.setSize(800,600);
+        window.setSize(800,800);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel gamePanel = new JPanel();
         Score = new JLabel("Score: ");
         Score.setText("Score: ");
+        Score.setForeground(new Color(191, 191, 191));
         //add more settings
         gamePanel.add(Score);
+        gamePanel.setBackground(new Color(0, 102, 17));
 
         Snakie snakePanel = new Snakie();
         Snakie.window = window;
