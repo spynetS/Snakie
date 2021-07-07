@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyVetoException;
@@ -61,7 +63,7 @@ public class Snakie extends JPanel{
         foodpos[1] = y;
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         System.out.println("Game over");
         score = 0;
@@ -212,18 +214,31 @@ public class Snakie extends JPanel{
         window.setSize(800,800);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        Snakie snakePanel = new Snakie();
+        Snakie.window = window;
+        snakePanel.setBackground(Color.black);
+        snakePanel.setFocusable(true);
+
+
         JPanel gamePanel = new JPanel();
         Score = new JLabel("Score: ");
         Score.setText("Score: ");
         Score.setForeground(new Color(191, 191, 191));
         //add more settings
+        JComboBox combox = new JComboBox();
+        combox.addItem("200");
+        combox.addItem("100");
+        combox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                speed = Integer.valueOf(combox.getSelectedItem().toString());
+                snakePanel.GameOver();
+            }
+        });
+        combox.setFocusable(false);
+        gamePanel.add(combox);
         gamePanel.add(Score);
         gamePanel.setBackground(new Color(0, 102, 17));
-
-        Snakie snakePanel = new Snakie();
-        Snakie.window = window;
-        snakePanel.setBackground(Color.black);
-        snakePanel.setFocusable(true);
 
         window.add(gamePanel,BorderLayout.NORTH);
         window.add(snakePanel,BorderLayout.CENTER);
