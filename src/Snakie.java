@@ -9,6 +9,12 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/*
+    TODO
+    Should not be able to turn on it self 
+    Ex If going right you should not be able to turn left so you die instantly
+    Rewrite so the event handler is faster
+*/
 
 public class Snakie extends JPanel{
 
@@ -178,7 +184,8 @@ public class Snakie extends JPanel{
             score++;
             Score.setText("Score: "+score);
         }
-        SnakeCollision:
+        //Checks if the snake has hit it self
+        SnakeCollision: 
         for(SnakePiece piece : snake)
         {
             for(SnakePiece piece2 : snake)
