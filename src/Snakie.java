@@ -11,8 +11,6 @@ import java.util.Random;
 
 /*
     TODO
-    Should not be able to turn on it self 
-    Rewrite so the event handler is faster
 */
 
 public class Snakie extends JPanel{
@@ -31,9 +29,7 @@ public class Snakie extends JPanel{
 
     public Snakie()
     {
-        snake.add(new SnakePiece(10,3));
-        snake.add(new SnakePiece(11,3));
-        snake.add(new SnakePiece(12,3));
+
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -69,6 +65,7 @@ public class Snakie extends JPanel{
 
     public void GameOver()
     {
+        System.out.println("g");
         score = 0;
         Score.setText("Score: 0");
         snakeDirection = 0;
@@ -89,6 +86,10 @@ public class Snakie extends JPanel{
     public int getHeightD()
     {
         return getHeight()/recheight;
+    }
+    public int getWidthD()
+    {
+        return getWidth()/recheight;
     }
 
     private void DrawBoard(Graphics g)
@@ -125,7 +126,7 @@ public class Snakie extends JPanel{
             {
                 g.setColor(new Color(0, 173, 43));
             }
-            g.fillRect(snakePiece.x*getWidth()/20,snakePiece.y*getHeightD(),getWidth()/20,getHeightD());
+            g.fillRect(snakePiece.x*getWidthD(),snakePiece.y*getHeightD(),getWidth()/20,getHeightD());
         }
 
     }
@@ -146,7 +147,6 @@ public class Snakie extends JPanel{
     {
         //So when the snake is moving i remove the last piece
         // And add a new piece with the new coordinates as the first piece in the list
-
         SnakePiece piece = new SnakePiece(snake.get(0).x,snake.get(0).y);
         switch (snakeDirection)
         {
@@ -218,14 +218,14 @@ public class Snakie extends JPanel{
         window.setSize(800,800);
         window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        Snakie snakePanel = new Snakie();
+        Score = new JLabel("Score: ");
         Snakie.window = window;
+        Snakie snakePanel = new Snakie();
         snakePanel.setBackground(Color.black);
         snakePanel.setFocusable(true);
-
+        snakePanel.GameOver();
 
         JPanel gamePanel = new JPanel();
-        Score = new JLabel("Score: ");
         Score.setText("Score: ");
         Score.setForeground(new Color(191, 191, 191));
         //add more settings
