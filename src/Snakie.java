@@ -12,7 +12,6 @@ import java.util.Random;
 /*
     TODO
     Should not be able to turn on it self 
-    Ex If going right you should not be able to turn left so you die instantly
     Rewrite so the event handler is faster
 */
 
@@ -43,11 +42,10 @@ public class Snakie extends JPanel{
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==39) snakeDirection = 2;
-                else if(e.getKeyCode()==37) snakeDirection=0;
-                else if(e.getKeyCode()==38) snakeDirection = 1;//Up
-                else if(e.getKeyCode()==40) snakeDirection = 3;//down
-                System.out.println(snake.get(0).x+" ble "+snake.get(0).y);
+                if(e.getKeyCode()==39&&snakeDirection!=0) snakeDirection = 2;//left
+                else if(e.getKeyCode()==37&&snakeDirection!=2) snakeDirection=0;//right
+                else if(e.getKeyCode()==38&&snakeDirection!=3) snakeDirection = 1;//Up
+                else if(e.getKeyCode()==40&&snakeDirection!=1) snakeDirection = 3;//down
 
             }
 
@@ -71,7 +69,6 @@ public class Snakie extends JPanel{
 
     public void GameOver()
     {
-        System.out.println("Game over");
         score = 0;
         Score.setText("Score: 0");
         snakeDirection = 0;
@@ -234,7 +231,7 @@ public class Snakie extends JPanel{
         //add more settings
         JComboBox combox = new JComboBox();
         combox.addItem("200");
-        combox.addItem("100");
+        combox.addItem("150");
         combox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
