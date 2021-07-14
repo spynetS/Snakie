@@ -11,6 +11,7 @@ import java.util.Random;
 
 /*
     TODO
+    snake shall die when outside screen
 */
 
 public class Snakie extends JPanel{
@@ -52,12 +53,30 @@ public class Snakie extends JPanel{
         });
     }
 
+    boolean SamePos(int x, int y)
+    {
+        for(SnakePiece piece:snake)
+        {
+            if(x == piece.x&&y == piece.y)
+                return true;
+        }
+        return false;
+    }
+    private int getRandomNumber(int max)
+    {
+        Random r = new Random();
+        return r.nextInt(max);
+    }
+
     private void SpawnNewFood()
     {
-        Random w = new Random();
-        Random h = new Random();
-        int x = w.nextInt(recwidth-1);
-        int y = h.nextInt(recheight-1);
+        int x = getRandomNumber(recwidth-1);
+        int y = getRandomNumber(recheight-1);
+        while(SamePos(x,y))
+        {
+            x = getRandomNumber(recwidth-1);
+            y = getRandomNumber(recheight-1);
+        }
         System.out.println(x+" "+y);
         foodpos[0] = x;
         foodpos[1] = y;
