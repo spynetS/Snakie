@@ -74,14 +74,12 @@ public class Snakie extends JPanel{
             x = getRandomNumber(recwidth-1);
             y = getRandomNumber(recheight-1);
         }
-        System.out.println(x+" "+y);
         foodpos[0] = x;
         foodpos[1] = y;
     }
 
     public void GameOver()
     {
-        System.out.println("g");
         score = 0;
         Score.setText("Score: 0");
         snakeDirection = 0;
