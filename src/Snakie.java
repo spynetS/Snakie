@@ -1,12 +1,11 @@
 import javax.swing.*;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 /*
@@ -52,8 +51,7 @@ public class Snakie extends JPanel{
             }
         });
     }
-
-    boolean SamePos(int x, int y)
+    private boolean SamePos(int x, int y)
     {
         for(SnakePiece piece:snake)
         {
@@ -67,7 +65,6 @@ public class Snakie extends JPanel{
         Random r = new Random();
         return r.nextInt(max);
     }
-
     private void SpawnNewFood()
     {
         int x = getRandomNumber(recwidth-1);
@@ -114,13 +111,11 @@ public class Snakie extends JPanel{
     private void DrawBoard(Graphics g)
     {
         //Draws all the scares of the board in different sizes dependent on the window size
-        int x=0;
         for(int i = 0;i<getHeight()/20;i++) {
             for(int ii = 0;ii<getWidth()/20;ii++) {
                 //Uses only getHeightD so the squares are squares and not rectangles
                 if((ii+i)%2==0)
                 {
-                    x= 0;
                     g.setColor(new Color(0, 69, 17));
                 }
                 else
@@ -248,13 +243,13 @@ public class Snakie extends JPanel{
         Score.setText("Score: ");
         Score.setForeground(new Color(191, 191, 191));
         //add more settings
-        JComboBox combox = new JComboBox();
+        JComboBox<String> combox = new JComboBox<>();
         combox.addItem("200");
         combox.addItem("150");
         combox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                speed = Integer.valueOf(combox.getSelectedItem().toString());
+                speed = Integer.parseInt(Objects.requireNonNull(combox.getSelectedItem()).toString());
                 snakePanel.GameOver();
             }
         });
