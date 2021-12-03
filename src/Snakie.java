@@ -260,15 +260,29 @@ public class Snakie extends JPanel{
         window.add(snakePanel,BorderLayout.CENTER);
 
         window.setVisible(true);
+        double t = 0.0;
+        double dt = 1 / 60.0;
 
-        while(true)
-        {   //Game loop
-            snakePanel.Update();
-            try {
-                Thread.sleep(speed);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        double currentTime = System.nanoTime();
+
+        while (true) {
+
+            double newTime = System.nanoTime();
+                double frameTime = newTime - currentTime;
+                currentTime = newTime;
+                while ( frameTime > 0.0 )
+                {
+                    try {
+                        Thread.sleep(speed);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    double deltaTime = Math.min(frameTime, dt);
+                    frameTime -= deltaTime;
+                    t += deltaTime;
+                    snakePanel.Update();
+
+                }
 
         }
     }
